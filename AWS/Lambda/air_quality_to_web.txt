@@ -1,0 +1,54 @@
+const AWS = require('aws-sdk');
+
+exports.handler = async (event) => {
+    try {
+        const dynamodb = new AWS.DynamoDB();
+        const response = await dynamodb.scan({
+            TableName: 'Airquality',
+            Select: 'ALL_ATTRIBUTES',
+        }).promise();
+
+        if (response.Items && response.Items.length > 0) {
+            const sortedItems = response.Items.sort((a, b) => b.Date_time.S.localeCompare(a.Date_time.S));
+            const latestData = sortedItems[0];
+
+            console.log('Latest Data:', latestData);
+
+            // Select the attributes
+            const attributes = ['Date_time', 'Device_type', 'CO', 'CO2', 'CO2_s', 'D_Week', 'PM', 'Humi', 'Temp', 'Voc', 'pred_CO2', 'pred_PM'];
+
+            // Construct the message object
+            const message = {};
+            attributes.forEach(attr => {
+                if (latestData[attr]) {
+                    if (latestData[attr].hasOwnProperty('S')) {
+                        message[attr] = latestData[attr].S;
+                    } else if (latestData[attr].hasOwnProperty('N')) {
+                        message[attr] = parseFloat(latestData[attr].N); // Convert numeric value to float
+                    }
+                }
+            });
+
+            const responseMessage = {
+                statusCode: 200,
+                body: JSON.stringify(message),
+            };
+
+            return responseMessage;
+        } else {
+            console.log("No data found in the DynamoDB table.");
+
+            return {
+                statusCode: 204,
+                body: JSON.stringify({ message: 'No data available' }),
+            };
+        }
+    } catch (error) {
+        console.error('Error querying DynamoDB:', error);
+
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'Internal Server Error' }),
+        };
+    }
+};

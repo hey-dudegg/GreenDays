@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index_h.css">
+    
+    <title>GreenDay</title>
+
+    <!-- AWS SDK for JavaScript 로드 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1153.0/aws-sdk.min.js"></script>
+</head>
+<body>
+
+<header>
+    <h1>GreenDay</h1>
+    <nav>
+        <span id="mainLink" onclick="navigateTo('index.html')">Main</span>
+        <span id="graphLink" onclick="navigateTo('graph.html')">Graph</span>
+        <span id="operationLink" onclick="navigateTo('operation.html')">Operation</span>
+    </nav>
+</header>
+
+<main>
+    <section>
+        <h2>AirQuality</h2>
+        <table id="airQualityTable"></table>
+    </section>
+    
+    <section>
+        <h2>Weather</h2>
+        <table id="weatherTable"></table>
+    </section>
+
+    <section>
+        <h2>Dust</h2>
+        <table id="dustTable"></table>
+    </section>
+</main>
+
+<script>
+    // 페이지 넘김
+    function navigateTo(page) {
+        window.location.href = page;
+    }
+
+    // AWS SDK 설정
+    AWS.config.update({
+        region: 'ap-northeast-2',
+        credentials: new AWS.Credentials({
+            accessKeyId: '',
+            secretAccessKey: '',
+        }),
+    });
+
+    // Lambda 함수 호출 함수
+    function callLambdaFunction(functionName) {
+        const lambda = new AWS.Lambda();
+
+        const params = {
+            FunctionName: functionName, // Lambda 함수의 이름
+            InvocationType: 'RequestResponse', // 요청 및 응답 모드
+            LogType: 'Tail', // 로그 출력
+        };
+
+        return new Promise((resolve, reject) => {
+            lambda.invoke(params, (err, data) => {
+                if (err) {
+                    console.error(`Error calling ${functionName}:`, err);
+                    reject(err);
+                } else {
+                    // Lambda 함수의 결과를 콘솔에 출력
+                    const result = JSON.parse(data.Payload);
+                    console.log(`${functionName} Response:`, result);
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    // 페이지 로드 시 Lambda 함수 호출
+    window.onload = async function () {
+      // 'air_quality_to_web' 함수와 'outside_to_web' 함수를 병렬로 호출
+      const airQualityPromise = callLambdaFunction('air_quality_to_web');
+      const outsidePromise = callLambdaFunction('outside_to_web');
+
+      // 결과를 받아와서 각각의 결과를 상단과 하단의 테이블에 추가
+      const airQualityResult = await airQualityPromise;
+      const outsideResult = await outsidePromise;
+
+      updateAirQualityTable('airQualityTable', airQualityResult.body);
+      updateWeatherTable('weatherTable', outsideResult.body);
+      updateDustTable('dustTable', outsideResult.body);
+  };
+
+  function updateAirQualityTable(tableId, data) {
+    const table = document.getElementById(tableId);
+
+    // Clear existing rows
+    table.innerHTML = '';
+
+    // Define the desired order of field names for AirQuality with modified names
+    const fieldOrder = ['Date_time', 'D_Week', 'Temp', 'Humi', 'Voc', 'CO', 'CO2', 'PM', 'pred_CO2', 'pred_PM'];
+
+    // Parse JSON data
+    const jsonData = JSON.parse(data);
+
+    // Create header row
+    const headerRow = table.insertRow();
+    fieldOrder.forEach(fieldName => {
+        const cell = headerRow.insertCell();
+        // Display modified field names
+        cell.textContent = getAirQualityDisplayName(fieldName);
+    });
+
+    // Create data row
+    const dataRow = table.insertRow();
+
+    // Fill in data cells
+    fieldOrder.forEach(fieldName => {
+        const cell = dataRow.insertCell();
+        // Get data from jsonData using the modified field name
+        cell.textContent = jsonData[fieldName];
+    });
+}
+
+// Function to get display name based on the original field name for AirQuality
+function getAirQualityDisplayName(fieldName) {
+    // Add logic to map original field names to display names
+    switch (fieldName) {
+        case 'Date_time':
+            return 'Date';
+        case 'D_Week':
+            return 'Week';
+        case 'Temp':
+            return 'Temperature';
+        case 'Humi':
+            return 'Humidity';
+        case 'Voc':
+            return 'TVOC';
+        case 'PM':
+            return 'PM';
+        case 'pred_CO2':
+            return '5M After CO2';
+        case 'pred_PM':
+            return '5M After PM';
+        
+        // Add more cases as needed
+        default:
+            return fieldName;
+    }
+}
+
+// Weather 테이블 업데이트 함수
+function updateWeatherTable(tableId, data) {
+    const table = document.getElementById(tableId);
+
+    // Clear existing rows
+    table.innerHTML = '';
+
+    // Define the desired order of field names for Weather
+    const fieldOrder = ['Date_time', 'TMP', 'REH', 'SKY', 'PTY', 'POP', 'PCP', 'SNO', 'WSD'];
+
+    // Parse JSON data
+    const jsonData = JSON.parse(data);
+
+    // Create header row
+    const headerRow = table.insertRow();
+    fieldOrder.forEach(fieldName => {
+        const cell = headerRow.insertCell();
+        // Display modified field names
+        cell.textContent = getWeatherDisplayName(fieldName);
+    });
+
+    // Create data row
+    const dataRow = table.insertRow();
+
+    // Fill in data cells
+    fieldOrder.forEach(fieldName => {
+        const cell = dataRow.insertCell();
+        // Get data from jsonData using the modified field name
+        cell.textContent = jsonData[fieldName];
+    });
+}
+
+// Function to get display name based on the original field name for Weather
+function getWeatherDisplayName(fieldName) {
+    // Add logic to map original field names to display names
+    switch (fieldName) {
+        case 'Date_time':
+            return 'Date';
+        case 'TMP':
+            return 'Temperature';
+        case 'REH':
+            return 'Humidity';
+        case 'SKY':
+            return 'SKY';
+        case 'PTY':
+            return 'Precipitation Type';
+        case 'POP':
+            return 'Precipitation Probability';
+        case 'PCP':
+            return 'Precipitation 1H';
+        case 'SNO':
+            return 'Snow 1H';
+        case 'WSD':
+            return 'Wind Speed';
+        
+        // Add more cases as needed
+        default:
+            return fieldName;
+    }
+}
+
+// Dust 테이블 업데이트 함수
+function updateDustTable(tableId, data) {
+    const table = document.getElementById(tableId);
+
+    // Clear existing rows
+    table.innerHTML = '';
+
+    // Define the desired order of field names for Dust
+    const fieldOrder = ['Date_time', 'khaiGrade', 'so2Value', 'coValue', 'o3Value', 'no2Value', 'pm25Value', 'pm10Value'];
+
+    // Parse JSON data
+    const jsonData = JSON.parse(data);
+
+    // Create header row
+    const headerRow = table.insertRow();
+    fieldOrder.forEach(fieldName => {
+        const cell = headerRow.insertCell();
+        // Display modified field names
+        cell.textContent = getDustDisplayName(fieldName);
+    });
+
+    // Create data row
+    const dataRow = table.insertRow();
+
+    // Fill in data cells
+    fieldOrder.forEach(fieldName => {
+        const cell = dataRow.insertCell();
+        // Get data from jsonData using the modified field name
+        cell.textContent = jsonData[fieldName];
+    });
+}
+
+// Function to get display name based on the original field name for Dust
+function getDustDisplayName(fieldName) {
+    // Add logic to map original field names to display names
+    switch (fieldName) {
+        case 'Date_time':
+            return 'Date';
+        case 'khaiGrade':
+            return 'CAI';
+        case 'so2Value':
+            return 'SO2';
+        case 'coValue':
+            return 'CO';
+        case 'o3Value':
+            return 'O3';
+        case 'no2Value':
+            return 'NO2';
+        case 'pm25Value':
+            return 'PM 2.5';
+        case 'pm10Value':
+            return 'PM 10';
+        
+        // Add more cases as needed
+        default:
+            return fieldName;
+    }
+}
+</script>
+
+</body>
+</html>

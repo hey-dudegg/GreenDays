@@ -1,0 +1,2 @@
+SELECT Date_time, motor_state, window_state, window_warning 
+FROM data/state

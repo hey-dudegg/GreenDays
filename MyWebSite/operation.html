@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="operation_h.css">
+
+    <title>Web Data Display</title>
+    <!-- AWS SDK for JavaScript 로드 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1153.0/aws-sdk.min.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <h1>GreenDay</h1>
+        <nav>
+            <span id="mainLink" onclick="navigateTo('index.html')">Main</span>
+            <span id="graphLink" onclick="navigateTo('graph.html')">Graph</span>
+            <span id="operationLink" onclick="navigateTo('operation.html')">Operation</span>
+        </nav>
+    </header>
+
+    <main>
+        <div class="section">
+            <!-- Auto Section -->
+            <p>Auto</p>
+            <button id="autoButton" onclick="toggleAutoMode()">OFF</button>
+        </div>
+
+        <div class="section">
+            <!-- AirPurifier Section -->
+            <p>AirPurifier</p>
+            <button id="offButton" onclick="controlAirPurifier('OFF')" disabled>OFF</button>
+            <button id="speed1Button" onclick="controlAirPurifier('1')" disabled>Speed 1</button>
+            <button id="speed2Button" onclick="controlAirPurifier('2')" disabled>Speed 2</button>
+            <button id="speed3Button" onclick="controlAirPurifier('3')" disabled>Speed 3</button>
+        </div>
+
+        <div class="section">
+            <!-- Window Section -->
+            <p>Window</p>
+            <button id="openButton" onclick="controlWindow('open')" disabled>Open</button>
+            <button id="closeButton" onclick="controlWindow('close')" disabled>Close</button>
+        </div>
+
+    </main>
+
+    <style>
+        
+    </style>
+
+  <script>
+    const currentDate = new Date();
+    const offset = currentDate.getTimezoneOffset(); // 타임존 오프셋 (분)
+
+    // 로컬 타임존을 고려하여 날짜와 시간을 포맷팅
+    const formattedDate = new Date(currentDate.getTime() - offset * 60000).toISOString().slice(0, 19).replace('T', ' ');
+
+    // 초기 상태 설정
+    let autoMode = false;
+    let clickCount = 0; // Counter for Auto button clicks
+
+    // AWS DynamoDB Configuration
+    const AWS = window.AWS;
+    AWS.config.update({
+        region: 'ap-northeast-2',
+        credentials: new AWS.Credentials({
+            accessKeyId: '',
+            secretAccessKey: '',
+        }),
+    });  // Replace 'your-region' with your AWS region
+    const docClient = new AWS.DynamoDB.DocumentClient();
+    const tableName = 'Order';  // Replace with your DynamoDB table name
+
+    // 페이지 넘김
+    function navigateTo(page) {
+        window.location.href = page;
+    }
+
+    // Auto 버튼 토글
+    function toggleAutoMode() {
+        clickCount++;
+        autoMode = clickCount % 2 === 0;
+
+        const autoButton = document.getElementById('autoButton');
+        autoButton.innerText = autoMode ? 'ON' : 'OFF';
+
+        // Dynamically build the item to be stored in DynamoDB
+        const item = {
+            Date_time: formattedDate,
+            auto: autoMode ? 'on' : 'off',
+            motor_order: autoMode ? 'na' : 'motor_stop',
+            window_order: autoMode ? 'na' : 'window_close'
+        };
+
+        // Send the item to DynamoDB
+        sendToDynamoDB(item);
+
+        // Toggle button states based on autoMode
+        const buttonsToControl = ['offButton', 'speed1Button', 'speed2Button', 'speed3Button', 'openButton', 'closeButton'];
+        toggleButtonState(autoMode, buttonsToControl);
+
+        // Enable or disable click events for the buttons
+        const clickableButtons = ['offButton', 'speed1Button', 'speed2Button', 'speed3Button', 'openButton', 'closeButton'];
+        toggleClickEvents(autoMode, clickableButtons);
+    }
+
+    // 기기 제어 함수들
+    function controlAirPurifier(command) {
+        const item = {
+            Date_time: formattedDate,
+            auto: 'na',
+            motor_order: command === 'OFF' ? 'motor_stop' : `motor_${command.toLowerCase()}`,
+            window_order: 'na'
+        };
+
+        sendToDynamoDB(item);
+    }
+
+    function controlWindow(command) {
+    let windowOrderValue;
+
+    if (command === 'open') {
+        windowOrderValue = 'window_open';
+    } else if (command === 'close') {
+        windowOrderValue = 'window_close';
+    } else {
+        windowOrderValue = 'na';
+    }
+
+    const item = {
+        Date_time: formattedDate,
+        auto: 'na',
+        motor_order: 'na',
+        window_order: windowOrderValue
+    };
+
+    sendToDynamoDB(item);
+}
+
+    function stop() {
+        const item = {
+            Date_time: formattedDate,
+            auto: 'na',
+            motor_order: 'motor_stop',
+            window_order: 'na'
+        };
+
+        sendToDynamoDB(item);
+    }
+
+    // Function to send data to DynamoDB
+    function sendToDynamoDB(item) {
+        const params = {
+            TableName: tableName,
+            Item: item
+        };
+
+        docClient.put(params, function (err, data) {
+            if (err) {
+                console.error('DynamoDB에 항목 저장 중 오류 발생', err);
+            } else {
+                console.log('DynamoDB에 항목 성공적으로 저장', data);
+            }
+        });
+    }
+
+    // Function to toggle button states
+    function toggleButtonState(isAutoMode, buttons) {
+        buttons.forEach(buttonId => {
+            const button = document.getElementById(buttonId);
+            button.disabled = isAutoMode;
+            button.style.backgroundColor = isAutoMode ? '' : ''; // Adjust color as needed
+        });
+    }
+
+    // Function to toggle click events for the buttons
+    function toggleClickEvents(isAutoMode, buttons) {
+        buttons.forEach(buttonId => {
+            const button = document.getElementById(buttonId);
+            if (isAutoMode) {
+                button.removeEventListener('click', buttonClickHandler);
+            } else {
+                button.addEventListener('click', buttonClickHandler);
+            }
+        });
+    }
+
+    // Event handler for clickable buttons
+    function buttonClickHandler() {
+        const command = this.innerText;
+        if (command !== 'ON' && command !== 'OFF') {
+            // Modify the condition to check for 'Speed 1' or 'Speed 2' and send the appropriate command
+            let motorCommand;
+            if (command === 'Speed 1') {
+                motorCommand = 'motor_1';
+            } else if (command === 'Speed 2') {
+                motorCommand = 'motor_2';
+            } else if (command == 'Speed 3') {
+                motorCommand = 'motor_3';
+            }
+
+            controlAirPurifier(motorCommand);
+        }
+    }
+
+    // Initial setup: add click events to clickable buttons
+    const clickableButtons = ['offButton', 'speed1Button', 'speed2Button', 'speed3Button', 'openButton', 'closeButton'];
+    clickableButtons.forEach(buttonId => {
+        const button = document.getElementById(buttonId);
+        button.addEventListener('click', buttonClickHandler);
+    });
+
+  </script>
+
+</body>
+</html>

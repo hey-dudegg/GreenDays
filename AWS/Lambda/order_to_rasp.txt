@@ -1,0 +1,31 @@
+const AWS = require('aws-sdk');
+const iotData = new AWS.IotData({ endpoint: 'a2mgnb1vux7nei-ats.iot.ap-northeast-2.amazonaws.com' });
+
+exports.handler = async (event) => {
+    try {
+        const newImage = event.Records[0].dynamodb.NewImage;
+
+        const motor_order = newImage.motor_order.S;
+        const window_order = newImage.window_order.S;
+        const auto = newImage.auto.S;
+
+        const message = JSON.stringify({
+            motor_order,
+            window_order,
+            auto,
+        });
+
+        const params = {
+            topic: 'data/order',
+            payload: message,
+            qos: 1
+        };
+
+        await iotData.publish(params).promise();
+
+        console.log('Message published to IoT Core:', message);
+    } 
+    catch (error) {
+        console.error('Error publishing message to IoT Core:', error);
+    }
+};

@@ -1,0 +1,87 @@
+/* graph_h.css */
+
+/* Set body and html height to 100% */
+body, html {
+    height: 100%;
+}
+
+/* Style for the fixed header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 75px;
+    padding: 2rem;
+    color: white;
+    background: rgb(2, 49, 65);
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Style adjustments for the canvas */
+canvas {
+    display: block; /* Ensure canvas is a block-level element */
+    max-width: 100%; /* Make canvas responsive within its container */
+    margin: 0 auto; /* Center the canvas within its container */
+}
+
+/* Navigation styles */
+nav {
+    display: flex;
+}
+
+nav span {
+    cursor: pointer;
+    margin-right: 30px; /* Add margin between navigation items */
+    width: 50px; /* Set a fixed width for navigation items */
+    white-space: nowrap;
+}
+
+nav span:hover {
+    text-decoration: underline;
+}
+
+/* Adjust main container styles */
+main {
+    padding: 2cm;
+    margin-top: 75px; /* Add margin-top to prevent overlap with fixed header */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Enable vertical scrollbar when needed */
+}
+
+/* Body background color */
+body {
+    background: #EEE;
+}
+
+/* Ensure box sizing includes padding and border */
+* {
+    box-sizing: border-box;
+}
+
+/* Arrange charts in two rows */
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Additional styling for the rows */
+.row .chart-container {
+    width: 47%; /* Adjust the width of the chart containers */
+    box-sizing: border-box;
+    margin-top: 20px;
+    margin-bottom: 20px; /* Add margin between chart containers */
+}
+
+/* Adjust the height of the charts */
+#chartPM,
+#chartVOC,
+#chartCO,
+#chartCO2 {
+    height: 500px; /* Adjust the height of the charts */
+    overflow-y: auto; /* Enable vertical scrollbar when needed */
+}

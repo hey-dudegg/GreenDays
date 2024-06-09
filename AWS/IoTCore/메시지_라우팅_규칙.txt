@@ -1,0 +1,4 @@
+IoTCore
+메시지를 라우팅 규칙 SQL 코드
+
+DynamoDBv2 사용

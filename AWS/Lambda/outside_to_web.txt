@@ -1,0 +1,70 @@
+const AWS = require('aws-sdk');
+
+exports.handler = async (event) => {
+    try {
+        // Create DynamoDB client using AWS SDK
+        const dynamoDB = new AWS.DynamoDB.DocumentClient(); // Use DocumentClient for simplified syntax
+
+        // DynamoDB table name
+        const tableName = 'Outside';
+
+        // Scan the entire table
+        const scanParams = {
+            TableName: tableName,
+        };
+
+        // Retrieve data from DynamoDB
+        const scanResult = await dynamoDB.scan(scanParams).promise();
+
+        if (scanResult.Items && scanResult.Items.length > 0) {
+            // Find the most recent item based on the "Date_time" attribute
+            const mostRecentItem = scanResult.Items.reduce((prev, current) => {
+                return (prev.Date_time > current.Date_time) ? prev : current;
+            });
+
+            // Extract necessary attributes for the most recent item
+            const responseData = {
+                Date_time: mostRecentItem.Date_time,
+                address: mostRecentItem.address,
+                coValue: mostRecentItem.coValue,
+                khaiGrade: mostRecentItem.khaiGrade,
+                khaiValue: mostRecentItem.khaiValue,
+                no2Value: mostRecentItem.no2Value,
+                o3Value: mostRecentItem.o3Value,
+                PCP: mostRecentItem.PCP,
+                pm10Value: mostRecentItem.pm10Value,
+                pm25Value: mostRecentItem.pm25Value,
+                POP: mostRecentItem.POP,
+                PTY: mostRecentItem.PTY,
+                REH: mostRecentItem.REH,
+                SKY: mostRecentItem.SKY,
+                SNO: mostRecentItem.SNO,
+                so2Value: mostRecentItem.so2Value,
+                station: mostRecentItem.station,
+                TMP: mostRecentItem.TMP,
+                WSD: mostRecentItem.WSD,
+                // ... Add other necessary attributes
+            };
+
+            // Return the response as a JSON string
+            return {
+                statusCode: 200,
+                body: JSON.stringify(responseData),
+            };
+        } else {
+            console.log("No data found in the DynamoDB table.");
+
+            return {
+                statusCode: 204,
+                body: JSON.stringify({ message: 'No data available' }),
+            };
+        }
+    } catch (error) {
+        console.error('Error querying DynamoDB:', error);
+
+        return {
+            statusCode: 500,
+            body: JSON.stringify({ error: 'Internal Server Error' }),
+        };
+    }
+};

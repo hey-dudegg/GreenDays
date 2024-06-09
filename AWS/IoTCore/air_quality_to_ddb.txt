@@ -1,0 +1,2 @@
+SELECT Device_type, Date_time, D_Week, Voc, CO, Temp, Humi, CO2, CO2_s, PM, pred_CO2, pred_PM
+FROM 'data/air'

@@ -1,0 +1,96 @@
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 75px;
+    padding: 2rem;
+    color: white;
+    background: rgb(2, 49, 65);
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 내비게이션 스타일 */
+nav {
+    display: flex;
+}
+
+nav span {
+    cursor: pointer;
+    margin-right: 30px; /* 여백을 추가하려는 값 */
+    width: 50px; /* 내비게이션 항목의 고정된 너비 설정 */
+    white-space: nowrap; /* 텍스트가 너비를 벗어나면 줄 바꿈 금지 */
+}
+
+nav span:hover {
+    text-decoration: underline;
+}
+  
+h1, p {
+    margin: 0;
+}
+  
+main {
+    padding: 2cm;
+    margin-top: 75px; /* 헤더 높이만큼 여백을 주어 겹치지 않도록 함 */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 8px;
+}
+
+input {
+    padding: 8px;
+    margin-bottom: 16px;
+}
+
+button {
+    padding: 10px;
+    background-color: #ccdee0;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ccdee0;
+}
+  
+body {
+    background: #EEE;
+}
+  
+body, html {
+    height: 200%;
+    overflow: hidden;
+}
+  
+* {
+    box-sizing: border-box;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #333;
+    color: #fff;
+}

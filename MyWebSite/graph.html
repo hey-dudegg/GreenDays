@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="graph_h.css">
+
+    <title>Web Data Display</title>
+
+    <!-- AWS SDK for JavaScript 로드 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1153.0/aws-sdk.min.js"></script>
+    <!-- Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1>GreenDay</h1>
+    <nav>
+      <span id="mainLink" onclick="navigateTo('index.html')">Main</span>
+        <span id="graphLink" onclick="navigateTo('graph.html')">Graph</span>
+        <span id="operationLink" onclick="navigateTo('operation.html')">Operation</span>
+    </nav>
+  </header>
+  
+  <main>
+    <div class="row">
+        <div class="chart-container">
+            <canvas id="chartpredCO2"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="chartpredPM"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="chartPM"></canvas>
+        </div>
+        
+    </div>
+    <div class="row">
+        <div class="chart-container">
+            <canvas id="chartVOC"></canvas>
+          </div>
+        <div class="chart-container">
+          <canvas id="chartCO"></canvas>
+        </div>
+        <div class="chart-container">
+          <canvas id="chartCO2"></canvas>
+        </div>
+        
+    </div>
+  </main>
+
+  <script>
+    // 페이지 넘김
+    function navigateTo(page) {
+        window.location.href = page;
+    }
+
+    // AWS DynamoDB configuration
+    AWS.config.update({
+        region: 'ap-northeast-2',  // Update with your DynamoDB region
+        accessKeyId: '', // Update with your AWS Access Key ID
+        secretAccessKey: '' // Update with your AWS Secret Access Key
+    });
+
+    // DynamoDB DocumentClient
+    var docClient = new AWS.DynamoDB.DocumentClient();
+
+    // Function to fetch DynamoDB data
+    function fetchData() {
+        var params = {
+            TableName: 'Airquality', // Update with your DynamoDB table name
+        };
+
+        docClient.scan(params, function(err, data) {
+            if (err) {
+                console.error("Unable to scan the table. Error JSON:", JSON.stringify(err, null, 2));
+            } else {
+                // Process the DynamoDB data and plot graphs
+                processAndPlotGraphs(data.Items);
+            }
+        });
+    }
+
+    // Function to process DynamoDB data and plot graphs
+    function processAndPlotGraphs(items) {
+        // Filter out data points where CO2 is greater than 6000
+        items = items.filter(item => item.CO2 < 6000);
+
+        // Sort items based on Date_time
+        items.sort((a, b) => new Date(a.Date_time) - new Date(b.Date_time));
+
+        // Process items to get Date_time, pm, Voc, CO, CO2, pred_CO2, pred_PM arrays
+        var totalDataPoints = items.length;
+        var dataPointsToShow = 100;
+        var step = Math.ceil(totalDataPoints / dataPointsToShow);
+
+        var dateTimes = [];
+        var pmValues = [];
+        var vocValues = [];
+        var coValues = [];
+        var co2Values = [];
+        var pred_CO2 = [];
+        var pred_PM = [];
+
+        for (var i = 0; i < totalDataPoints; i += step) {
+            // 추가: VOC 값이 1000을 넘어가는 경우 해당 데이터는 제외
+            if (items[i].Voc <= 1000) {
+                dateTimes.push(items[i].Date_time);
+                pmValues.push(items[i].PM);
+                vocValues.push(items[i].Voc);
+                coValues.push(items[i].CO);
+                co2Values.push(items[i].CO2);
+                pred_CO2.push(items[i].pred_CO2);
+                pred_PM.push(items[i].pred_PM);
+            }
+        }
+
+        // Plot PM graph
+        var ctxPM = document.getElementById('chartPM').getContext('2d');
+        var chartPM = new Chart(ctxPM, {
+            type: 'line',
+            data: {
+                labels: dateTimes,
+                datasets: [
+                    {
+                        label: 'PM',
+                        data: pmValues,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        ticks: {
+                            maxTicksLimit: 10,
+                            maxRotation: 0,
+                            minRotation: 0,
+                        }
+                    }
+                }
+            }
+        });
+
+        // Plot VOC graph
+        var ctxVOC = document.getElementById('chartVOC').getContext('2d');
+        var chartVOC = new Chart(ctxVOC, {
+            type: 'line',
+            data: {
+                labels: dateTimes,
+                datasets: [
+                    {
+                        label: 'TVOC',
+                        data: vocValues,
+                        backgroundColor: 'rgba(255, 205, 86, 0.2)',
+                        borderColor: 'rgba(255, 205, 86, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        ticks: {
+                            maxTicksLimit: 10,
+                            maxRotation: 0,
+                            minRotation: 0,
+                        }
+                    }
+                }
+            }
+        });
+
+        // Plot CO graph
+        var ctxCO = document.getElementById('chartCO').getContext('2d');
+        var chartCO = new Chart(ctxCO, {
+            type: 'line',
+            data: {
+                labels: dateTimes,
+                datasets: [
+                    {
+                        label: 'CO',
+                        data: coValues,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        ticks: {
+                            maxTicksLimit: 10,
+                            maxRotation: 0,
+                            minRotation: 0,
+                        }
+                    }
+                }
+            }
+        });
+
+        // Plot CO2 graph
+        var ctxCO2 = document.getElementById('chartCO2').getContext('2d');
+        var chartCO2 = new Chart(ctxCO2, {
+            type: 'line',
+            data: {
+                labels: dateTimes,
+                datasets: [
+                    {
+                        label: 'CO2',
+                        data: co2Values,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        ticks: {
+                            maxTicksLimit: 10,
+                            maxRotation: 0,
+                            minRotation: 0,
+                        }
+                    }
+                }
+            }
+        });
+
+        // Plot predCO2 graph
+        var ctxpredCO2 = document.getElementById('chartpredCO2').getContext('2d');
+        var chartpredCO2 = new Chart(ctxpredCO2, {
+            type: 'line',
+            data: {
+                labels: dateTimes,
+                datasets: [
+                    {
+                        label: 'pred_CO2',
+                        data: pred_CO2,
+                        backgroundColor: 'rgba(165, 42, 42, 0.2)',
+                        borderColor: 'rgba(165, 42, 42, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        ticks: {
+                            maxTicksLimit: 10,
+                            maxRotation: 0,
+                            minRotation: 0,
+                        }
+                    }
+                }
+            }
+        });
+
+        // Plot predPM graph
+        var ctxpredPM = document.getElementById('chartpredPM').getContext('2d');
+        var chartpredPM = new Chart(ctxpredPM, {
+            type: 'line',
+            data: {
+                labels: dateTimes,
+                datasets: [
+                    {
+                        label: 'pred_PM',
+                        data: pred_PM,
+                        backgroundColor: 'rgba(138, 43, 226, 0.2)',
+                        borderColor: 'rgba(138, 43, 226, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        ticks: {
+                            maxTicksLimit: 10,
+                            maxRotation: 0,
+                            minRotation: 0,
+                        }
+                    }
+                }
+            }
+        });
+
+    
+        
+    }
+
+    // Fetch data and plot graphs on page load
+    fetchData();
+  </script>
+
+</body>
+</html>

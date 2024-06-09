@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="first_h.css">
+
+    <title>Web Data Display</title>
+
+    <!-- AWS SDK for JavaScript 로드 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1153.0/aws-sdk.min.js"></script>
+  </head>
+  <body>
+  
+    <header>
+      <h1>GreenDay</h1>
+    </header>
+    
+    <main>
+      <form id="dataForm">
+        <label for="nickname">NickName:</label>
+        <input type="text" id="nickname" name="nickname" required><br>
+  
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required><br>
+  
+        <label for="district">District:</label>
+        <input type="text" id="district" name="district" required><br>
+  
+        <label for="town">Town:</label>
+        <input type="text" id="town" name="town" required><br>
+  
+        <!-- 수정: submit 버튼을 누르면 saveData 함수가 호출되도록 변경 -->
+        <button type="button" onclick="saveData()">데이터 저장</button>
+      </form>
+    </main>
+  
+
+  <script>
+    // AWS SDK 설정
+    AWS.config.update({
+        region: 'ap-northeast-2',
+        credentials: new AWS.Credentials({
+            accessKeyId: '',
+            secretAccessKey: '',
+        }),
+    });
+
+    function saveData() {
+      const dynamodb = new AWS.DynamoDB.DocumentClient();
+      const nickname = document.getElementById('nickname').value;
+      const city = document.getElementById('city').value;
+      const district = document.getElementById('district').value;
+      const town = document.getElementById('town').value;
+
+      const params = {
+          TableName: 'Customer',
+          Item: {
+              email : nickname,
+              city: city,
+              district: district,
+              town: town,
+          },
+      };
+
+      dynamodb.put(params, (err, data) => {
+          if (err) {
+              console.error('에러:', err);
+          } else {
+              console.log('데이터가 성공적으로 저장되었습니다:', data);
+
+              // 수정: 저장 후에 다음 페이지로 이동
+              window.location.href = 'index.html';
+          }
+      });
+    }
+  </script>
+
+</body>
+</html>
