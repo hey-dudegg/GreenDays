@@ -1,23 +1,23 @@
-# 실내 공기질 유지를 위한 자동 환기 공기 청정 시스템
-
-<div align="center">
-  <img src="https://raw.githubusercontent.com/hey-dudegg/OnCore-Project/5bd5e22f175f356d9802a76fb1d18b7bc0a91c4d/frontend/src/assets/NewBanner.svg">
-
-  <h2>실내 공기질 유지를 위한 자동 환기 공기 청정 시스템</h2>
+  <div align="center">
+    <img width="190" alt="image" src="https://github.com/hey-dudegg/GreenDays_Project/assets/154962837/eb0ece56-e66a-4ede-bcd8-2ff7dc8013d2">
+      <h1>실내 공기질 유지를 위한 자동 환기 공기 청정 시스템</h1>
   <h4>🗝️ KeyWords <h4/>
   <p>#AirQuality #AutomaticVentilation #AirPurification #IoT #SmartHome</p>
   <br>
-  <div align="center">
     <img src="https://img.shields.io/badge/Arduino-00979D?style=flat-square&logo=Arduino&logoColor=white"/>
     <img src="https://img.shields.io/badge/Raspberry Pi-A22846?style=flat-square&logo=Raspberry Pi&logoColor=white"/>
-    <img src="https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white"/>
-    <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=Python&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=white"/>
     <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=black"/>
     <img src="https://img.shields.io/badge/HTML-E34F26?style=flat-square&logo=HTML5&logoColor=white"/>
     <img src="https://img.shields.io/badge/CSS-1572B6?style=flat-square&logo=CSS3&logoColor=white"/>
+    <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=TensorFlow&logoColor=white"/>
+    <br>
+      <img src="https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=Pandas&logoColor=white"/>
+    <img src="https://img.shields.io/badge/MQTT-660066?style=flat-square&logo=MQTT&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Zigbee-EB0443?style=flat-square&logo=Zigbee&logoColor=white"/>
+    <img src="https://img.shields.io/badge/AWS Lambda-FF9900?style=flat-square&logo=AWS Lambda&logoColor=white"/>
+    <img src="https://img.shields.io/badge/AWS DynamoDB-4053D6?style=flat-square&logo=Amazon DynamoDB&logoColor=white"/>
   </div>
-  <br>
-</div>
 
 ---
 
@@ -25,7 +25,7 @@
 국민의 소득 수준 증가와 삶의 질에 관한 관심이 커지고, 하루 중 대부분을 실내 환경에서 생활함에 따라 ‘건강한 실내 환경요소’에 많은 국민의 관심이 집중되고 있습니다. 이에 따라 실내 공기질 유지를 위한 자동 환기 공기 청정 시스템을 개발하게 되었습니다.
 
 # 서비스 소개
-본 시스템은 실내 공기질을 자동으로 분석하고 예측하여 환기와 공기 청정을 통해 최적의 실내 환경을 유지하는 스마트 홈 IoT 솔루션입니다.
+실내 공기질을 자동으로 분석하고 예측하여 환기와 공기 청정을 통해 최적의 실내 환경을 유지하는 스마트 홈 IoT 솔루션입니다.
 
 # 기능 소개
 
@@ -33,126 +33,38 @@
 - 공기청정기에 부착된 다양한 센서를 통해 실내 공기질을 측정하고, 인공지능을 통해 공기질을 예측합니다.
 - 예측 데이터를 기반으로 환기 기기를 자동으로 제어하여 최적의 실내 공기질을 유지합니다.
 
-| ![공기청정기](사진 경로) |
-| ----------------------------------------------------------------------------- |
-| 공기청정기 구성도                                                            |
-
-### 🧑‍💻 애플리케이션 및 웹 페이지
-- 실내외 공기질 데이터를 시각화하여 사용자에게 제공하고, 기기들을 제어할 수 있는 인터페이스를 제공합니다.
-
-| ![애플리케이션](사진 경로) |
-| ----------------------------------------------------------------------------- |
-| 애플리케이션 UI                                                               |
-
 ### 🏠 자동 환기 시스템
 - 창문에 부착된 액추에이터를 통해 자동으로 창문을 개폐하여 환기를 시킵니다.
 - 외부인의 침입을 감지하는 충격 센서가 포함되어 있습니다.
 
-| ![환기 기기](사진 경로) |
+| <img width="650" alt="image" src="https://github.com/hey-dudegg/GreenDays_Project/assets/154962837/f8963875-693a-425b-b665-f710ff043f6e"> |
 | ----------------------------------------------------------------------------- |
-| 환기 기기 구성도                                                              |
+| 공기청정기 및 액추에이터 구성도                                                            |
 
-# 🔗 서버 아키텍처
+### 🧑‍💻 애플리케이션
+- 실내외 공기질 데이터를 시각화하여 사용자에게 제공하고, 기기들을 제어할 수 있는 인터페이스를 제공합니다.
 
-![시스템 구상도](그림 경로)
+|<img width="749" alt="image" src="https://github.com/hey-dudegg/GreenDays_Project/assets/154962837/406d7557-de7a-45d2-a42b-40339683aa9b">|
+| ----------------------------------------------------------------------------- |
+| 애플리케이션 UI                                                               |
 
-# 👻 팀 소개 (팀명: 불사조)
+
+#  서버 아키텍처
+<img width="583" alt="image" src="https://github.com/hey-dudegg/GreenDays_Project/assets/154962837/2e3703bc-c3f8-486b-91d4-e1a0746bed19">
+
+# 의사결정 알고리즘
+<img width="565" alt="image" src="https://github.com/hey-dudegg/GreenDays_Project/assets/154962837/d5a65e13-35db-4a8d-8cd8-f47334219ba6">
+
+# 인공지능 흐름도
+<img width="544" alt="image" src="https://github.com/hey-dudegg/GreenDays_Project/assets/154962837/a4ac028e-71be-494a-ab08-2a8ce468756e">
+
+# 머신러닝 모델 성능 비교
+<img width="582" alt="image" src="https://github.com/hey-dudegg/GreenDays_Project/assets/154962837/17a681e9-0da2-4b49-ab29-6c023efd4a90">
+
+
+# 팀 소개 (팀명: 불사조)
 - 담당 교수: 임창균
 - 팀원: 김동준, 진서형, 김가연
 
-# 📃 프로젝트 포스터
-![프로젝트 포스터](포스터 경로)
-
-# 목차
-
-0. 개발 배경 및 목적
-1. 시나리오 및 구성도
-2. 공기청정기
-3. 환기 기기
-4. 공기질 분석 및 예측 시스템
-5. 소프트웨어
-6. 애플리케이션
-7. 결과물 활용방안 및 기대효과
-8. 유스케이스 시나리오
-
-# 개발 배경 및 목적
-
-### 개발 배경
-- 실내 공기질 오염은 외부 요인과 내부 요인으로 발생하며, 이는 호흡기계 및 폐 질환을 유발하고 집중력 저하, 피로 등 건강을 위협합니다.
-- COVID-19과 같은 전염병의 공기 감염 예방을 위해 모든 유형의 실내 공간에서의 주기적인 창문 환기가 필요합니다.
-
-### 문제점
-- 기계식 환기 장치의 높은 가격과 노후된 건물의 낮은 기밀 성능으로 인해 미세먼지 유입 가능성이 높습니다.
-- 이산화탄소 농도가 기준치를 초과하는 경우가 많아 주기적인 환기가 필요하지만 실외 공기질 오염으로 인해 환기를 시키지 않는 경우가 많습니다.
-- 공기청정기는 이산화탄소를 정화할 수 없기 때문에 환기 기기가 필요합니다.
-
-### 해결 방법
-- 인공지능을 통해 실내 공기질 오염을 예측해주는 공기청정기 개발
-- 실내외 공기 오염 정도를 고려하여 자연 환기를 시켜주는 공기청정기 연동형 자동 액추에이터 개발
-- 공기청정기에 내장된 센서를 통해 실내 공기질 오염 상태를 측정 및 분석하여 사용자에게 시각화된 정보로 제공
-
-# 시나리오 및 하드웨어 구성도
-
-### 최종 개발 목표
-- 공기청정기에 부착된 센서들로부터 실내 공기질 데이터를 수집하고 메인보드에서 이를 분석 및 예측
-- 예측된 데이터와 기상청에서 받은 데이터를 기반으로 환기 기기 작동을 제어하는 알고리즘 개발
-- 애플리케이션 및 웹 페이지를 통해 사용자에게 시각화된 실내 공기질 정보를 제공
-
-### 유스케이스 시나리오
-#### 공기청정기
-1. 공기청정기에 부착된 센서로 실내 공기질 측정
-2. 측정된 데이터를 라즈베리파이에서 전처리 후 기계학습을 통해 예측
-3. 예측된 데이터는 AWS dynamoDB로 전송 및 실내 공기질 상태 유지 알고리즘에 따라 공기청정기 작동 조절
-4. 환기 작동과 연동하여 실내 공기질 상태 유지
-
-#### 환기 기기
-1. 라즈베리파이에서 실내 공기질 데이터와 기상청에서 받은 실외 공기질 데이터를 분석하여 액추에이터로 제어 명령 송신
-2. 환기 기기는 수신받은 제어 명령으로 창문을 자동 개폐
-3. 외부인의 침입을 감지 시 경고음 발생
-
-#### 애플리케이션 및 웹 페이지
-1. 실내외 공기질 데이터를 시각화하여 사용자에게 공기질 상태 제공
-2. 사용자는 애플리케이션 및 웹 페이지를 통해 기기들을 조작 가능
-
-# 결과물 활용방안 및 기대효과
-
-### 차별성
-- 시설의 건축적 및 설비적 특징과 관계없는 창문 부착형 저가 액추에이터로 자연 환기의 용이성 증가
-- 앱을 통해 편리하게 공기 청정 기능을 제어 및 모니터링 가능
-
-### 도전성
-- 실내 공기질 분석 및 예측 시스템 구축
-- 실내 공기질 정화 효율 개선을 위한 작동시간 분석 알고리즘
-- 실내외 공기질 데이터 상관관계 분석 알고리즘 개발
-- 공기청정기와 환기 기기의 통신망 구축과 동력 제어 알고리즘
-
-### 기대효과
-- 자연 환기를 통한 실내 이산화탄소 농도 유지로 전염병의 공기 감염 방지
-- 애플리케이션을 통해 실내 공기 오염 정도를 시각적으로 제공하여 사용자의 주거 만족도 증가
-- 단기간 내 실내 공기질 오염이 심해지고 전염병의 공기 감염이 우려되는 어린이집, 학교 등 교육 시설 및 다중시설에서 유용
-- 굽기 등의 조리가 잦은 주거 환경에서 자동 환기 시스템이 유용
-
-# 유스케이스 시나리오
-
-### 실내 공기질 모니터
-- 실내 공기질을 측정하고 데이터를 아두이노를 통해 데이터 분석 및 예측용 메인보드로 전송
-- 전송받은 데이터를 DB에 저장하고 분석 및 예측 결과값을 사용자에게 제공
-
-### 통합 DB 관리 분석 시스템
-- 실내 공기질 데이터를 DB에 저장하고 딥러닝을 이용해 분석 및 예측
-- 분석된 데이터를 바탕으로 공
-
-기청정기와 환기 기기의 작동을 제어
-- 사용자에게 시각화된 공기질 정보를 제공
-
-### 미들웨어
-- 사용자에게 분석된 공기질 정보와 통계화된 시각 자료를 제공
-- 운행 모드 설정을 통해 공기청정기 및 환기 기기를 조작
-
-### 공기 청정부
-- 통합 DB 시스템의 제어를 받아 팬이 돌아가면서 필터를 통해 공기를 정화
-
-### 환기 기기부
-- 액추에이터는 메인보드로부터 창문 개폐 메시지를 수신받아 작동
-- 창문의 개폐 여부를 라즈베리파이로 송신
-
+# 프로젝트 포스터
+<img width="961" alt="컴퓨터공학과-졸업작품 판넬(불사조)" src="https://github.com/hey-dudegg/GreenDays_Project/assets/154962837/520180ea-0283-4007-8537-53b1531d8545">
