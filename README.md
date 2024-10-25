@@ -6,26 +6,25 @@
   <br>
     <img src="https://img.shields.io/badge/Arduino-00979D?style=flat-square&logo=Arduino&logoColor=white"/>
     <img src="https://img.shields.io/badge/Raspberry Pi-A22846?style=flat-square&logo=Raspberry Pi&logoColor=white"/>
-    <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=Node.js&logoColor=white"/>
     <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=black"/>
-    <img src="https://img.shields.io/badge/HTML-E34F26?style=flat-square&logo=HTML5&logoColor=white"/>
-    <img src="https://img.shields.io/badge/CSS-1572B6?style=flat-square&logo=CSS3&logoColor=white"/>
-    <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=TensorFlow&logoColor=white"/>
-    <br>
-      <img src="https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=Pandas&logoColor=white"/>
-    <img src="https://img.shields.io/badge/MQTT-660066?style=flat-square&logo=MQTT&logoColor=white"/>
-    <img src="https://img.shields.io/badge/Zigbee-EB0443?style=flat-square&logo=Zigbee&logoColor=white"/>
     <img src="https://img.shields.io/badge/AWS Lambda-FF9900?style=flat-square&logo=AWS Lambda&logoColor=white"/>
     <img src="https://img.shields.io/badge/AWS DynamoDB-4053D6?style=flat-square&logo=Amazon DynamoDB&logoColor=white"/>
+    <br>
+    <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=TensorFlow&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=Pandas&logoColor=white"/>
+    <img src="https://img.shields.io/badge/MQTT-660066?style=flat-square&logo=MQTT&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Zigbee-EB0443?style=flat-square&logo=Zigbee&logoColor=white"/>
+
   </div>
 
 ---
 
 # 기획의도
-국민의 소득 수준 증가와 삶의 질에 관한 관심이 커지고, 하루 중 대부분을 실내 환경에서 생활함에 따라 ‘건강한 실내 환경요소’에 많은 국민의 관심이 집중되고 있습니다. 이에 따라 실내 공기질 유지를 위한 자동 환기 공기 청정 시스템을 개발하게 되었습니다.
+국민 소득 수준 증가 및 삶의 질에 관한 관심이 증대되고, 하루 중 대부분을 실내 환경에서 생활함에 따라 ‘건강한 실내 환경요소’에 국민 관심이 집중.   
+이에 따라 실내 공기질 유지를 위한 자동 환기 공기 청정 시스템을 개발
 
 # 서비스 소개
-실내 공기질을 자동으로 분석하고 예측하여 환기와 공기 청정을 통해 최적의 실내 환경을 유지하는 스마트 홈 IoT 솔루션입니다.
+최적 실내 환경 유지 IoT 솔루션. 실내 공기질 자동 분석 및 예측을 통한 환기 및 공기 청정 기능. 
 
 # 기능 소개
 
