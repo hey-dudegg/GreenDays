@@ -4,27 +4,31 @@
   <h4>🗝️ KeyWords <h4/>
   <p>#AirQuality #AutomaticVentilation #AirPurification #IoT #SmartHome</p>
   <br>
-    <img src="https://img.shields.io/badge/Arduino-00979D?style=flat-square&logo=Arduino&logoColor=white"/>
-    <img src="https://img.shields.io/badge/Raspberry Pi-A22846?style=flat-square&logo=Raspberry Pi&logoColor=white"/>
-    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=black"/>
-    <img src="https://img.shields.io/badge/AWS Lambda-FF9900?style=flat-square&logo=AWS Lambda&logoColor=white"/>
-    <img src="https://img.shields.io/badge/AWS DynamoDB-4053D6?style=flat-square&logo=Amazon DynamoDB&logoColor=white"/>
-    <br>
-    <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=TensorFlow&logoColor=white"/>
-    <img src="https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=Pandas&logoColor=white"/>
-    <img src="https://img.shields.io/badge/MQTT-660066?style=flat-square&logo=MQTT&logoColor=white"/>
-    <img src="https://img.shields.io/badge/Zigbee-EB0443?style=flat-square&logo=Zigbee&logoColor=white"/>
+  <img src="https://img.shields.io/badge/C-A8B9CC?style=flat-square&logo=C&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=Python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Arduino-00979D?style=flat-square&logo=Arduino&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Raspberry Pi-A22846?style=flat-square&logo=Raspberry Pi&logoColor=white"/>
+  <br>
+  <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=TensorFlow&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=Pandas&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Ubuntu-E95420?style=flat-square&logo=Ubuntu&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Matplotlib-11557C?style=flat-square&logo=Matplotlib&logoColor=white"/>
+  <img src="https://img.shields.io/badge/MQTT-660066?style=flat-square&logo=MQTT&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Zigbee-EB0443?style=flat-square&logo=Zigbee&logoColor=white"/>
+
 
   </div>
 
 ---
 
 # 기획의도
-국민 소득 수준 증가 및 삶의 질에 관한 관심이 증대되고, 하루 중 대부분을 실내 환경에서 생활함에 따라 ‘건강한 실내 환경요소’에 국민 관심이 집중.   
-이에 따라 실내 공기질 유지를 위한 자동 환기 공기 청정 시스템을 개발
+- 국민 소득 수준 증가 및 삶의 질에 관한 관심이 증대되고, 하루 중 대부분을 실내 환경에서 생활(일 평균 20.7시간, 86%)
+- ‘건강한 실내 환경요소’에 국민 관심이 집중됨에 따라 실내 공기질 유지를 위한 자동 환기 공기 청정 시스템을 개발
+- 실내 이산화탄소 정화 및 전염병의 공기 감염 예방을 위한 물리적 자연 환기 시스템 개발
 
 # 서비스 소개
-최적 실내 환경 유지 IoT 솔루션. 실내 공기질 자동 분석 및 예측을 통한 환기 및 공기 청정 기능. 
+최적 실내 환경 유지 IoT 솔루션
+- 실내 공기질 센싱 및 예측을 통한 환기 및 공기 청정 기능
 
 # 기간 및 인원
 - 기간 : 7개월
